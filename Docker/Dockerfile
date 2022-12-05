@@ -10,3 +10,7 @@ RUN R -e "install.packages(c('Seurat','hdf5r','dplyr','cowplot','knitr','slingsh
 RUN R -e "BiocManager::install(c('SingleR','slingshot','scRNAseq','celldex','fgsea','multtest','scuttle','BiocGenerics', 'DelayedArray', 'DelayedMatrixStats','limma', 'S4Vectors', 'SingleCellExperiment','SummarizedExperiment', 'batchelor', 'org.Mm.eg.db', 'AnnotationHub','scater','edgeR','apeglm','DESeq2','pcaMethods','clusterProfiler'))"
 RUN R -e "remotes::install_github(c('satijalab/seurat-wrappers','kevinblighe/PCAtools','chris-mcginnis-ucsf/DoubletFinder','velocyto-team/velocyto.R'))"
 RUN R -e "devtools::install_github(c('kevinblighe/EnhancedVolcano','cole-trapnell-lab/monocle3'))"
+
+#Later additions
+RUN R -e "BiocManager::install(c('edgeR','dittoSeq','scDataviz'))"
+RUN R -e "devtools::install_github(c('hypercompetent/colorway','powellgenomicslab/DropletQC','samuel-marsh/scCustomize'))"
