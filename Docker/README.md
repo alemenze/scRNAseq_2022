@@ -5,12 +5,25 @@ For consistency across locations, we have built out a quick RStudio container. T
 
 ## Docker command
 ```bash
-docker run --rm -p 8787:8787 -e PASSWORD=$password -v ./:/home/rstudio alemenze/abrfseurat
+docker run --rm -p 8787:8787 -e PASSWORD=$password -v $localdir:/home/rstudio alemenze/abrfseurat
 ```
+Change the password and localdir to what you wish to use for your settings. 
 To then load the instance, navigate to [localhost:8787](http://localhost:8787)
 Enter rstudio as the username and the password you specified. 
 
+Note: if you try to load a directory with external connections you may get some funky errors. If you do, try a different local directory that doesnt have outgoing connections. 
+
 Then enjoy playing in the data :) 
+
+### Docker command breakdown:
+```bash
+docker run \ #starts docker and tells it to run
+    --rm \ #removes the image when you are done
+    -p 8787:8787 \ #defines the port you wish to use. the image uses an internal port of 8787, but the first value you can change to whatever local port you have free and wish to use. 
+    -e PASSWORD=$password \ #recent updates demand adding a password. replace $password with whatever you wish- I usually just use "-e PASSWORD=test" since its easy
+    -v $localdir:/home/rstudio \ #defines your local directory that will be mounted in the image. the default image directory is /home/rstudio, so we need to replace the $localdir with the path to your local directory with the data. 
+    alemenze/abrfseurat #calls the specific dcoker image we have here!
+```
 
 ## Updating image
 We can update the image as we wish, but unfortunately dockerhub no longer allows for automated builds without a paying account (as far as I know)- so we will need to manually build and push.
@@ -65,4 +78,3 @@ library(EnhancedVolcano)
 library(PCAtools)
 library(clusterProfiler)
 ```
-
