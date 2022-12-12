@@ -1,5 +1,6 @@
-# Dockerizer container for Seurat
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+# Container for Seurat
+[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 
 For consistency across locations, we have built out a quick RStudio container. To use with docker, use the command below to start an instance in your current working directory using whatever password you wish. If you want to use a specific directory in your local system, change the ./ to the appropriate path. 
 
@@ -24,6 +25,19 @@ docker run \ #starts docker and tells it to run
     -v $localdir:/home/rstudio \ #defines your local directory that will be mounted in the image. the default image directory is /home/rstudio, so we need to replace the $localdir with the path to your local directory with the data. 
     alemenze/abrfseurat #calls the specific dcoker image we have here!
 ```
+
+## Singularity command
+If you wish to run this on an HPC, you can also use this image there with singularity. Personally I do this in cases of memory issues when I exceed capacity of my local workstation- Ill write it up as a markdown file to be executed through the memory intensive steps (like integration), and save an R image to bring back to local machine. 
+```bash
+singularity exec --bind /path/to/hpc/data/location/:/home/rstudio/  docker://alemenze/abrfseurat Rscript -e "rmarkdown::render('Processing.Rmd')"
+```
+
+### Interactive singularity command
+I have not tested the interactivity, theoretically it will work in an CLI capacity but any sort of Rstudio will be dependent on your HPC structure. 
+```bash
+singularity shell --cleanenv docker://alemenze/abrfseurat
+```
+This has been roughly tested with singularity 3.5.2, but depending upon your install for singularity it may throw a user issue. 
 
 ## Updating image
 We can update the image as we wish, but unfortunately dockerhub no longer allows for automated builds without a paying account (as far as I know)- so we will need to manually build and push.
