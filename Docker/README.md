@@ -61,6 +61,7 @@ library(reshape2)
 library(RColorBrewer)
 library(patchwork)
 library(magrittr)
+library(clustree)
 
 #scRNA core packages
 library(Seurat)
