@@ -14,4 +14,4 @@ RUN R -e "devtools::install_github(c('kevinblighe/EnhancedVolcano','cole-trapnel
 #Later additions
 RUN R -e "BiocManager::install(c('edgeR','dittoSeq','scDataviz'))"
 RUN R -e "devtools::install_github(c('hypercompetent/colorway','powellgenomicslab/DropletQC','samuel-marsh/scCustomize'))"
-RUN R -e "install.packages(c('clustree'))"
+RUN R -e "install.packages(c('clustree','SoupX'))"

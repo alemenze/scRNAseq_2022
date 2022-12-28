@@ -81,6 +81,7 @@ library(velocyto.R)
 library(slingshot)
 library(SingleR)
 library(DoubletFinder)
+library(SoupX)
 
 #Other random packages for pseudobulk or things I like to use
 library(apeglm)
