@@ -62,6 +62,7 @@ library(RColorBrewer)
 library(patchwork)
 library(magrittr)
 library(clustree)
+library(Matrix.utils)
 
 #scRNA core packages
 library(Seurat)
