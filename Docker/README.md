@@ -28,16 +28,23 @@ docker run \ #starts docker and tells it to run
 
 ## Singularity command
 If you wish to run this on an HPC, you can also use this image there with singularity. Personally I do this in cases of memory issues when I exceed capacity of my local workstation- Ill write it up as a markdown file to be executed through the memory intensive steps (like integration), and save an R image to bring back to local machine. 
+This will run it in the current working directory off a file called "Processing.Rmd". 
 ```bash
-singularity exec --bind /path/to/hpc/data/location/:/home/rstudio/  docker://alemenze/abrfseurat Rscript -e "rmarkdown::render('Processing.Rmd')"
+singularity exec docker://alemenze/abrfseurat Rscript -e "rmarkdown::render('Processing.Rmd')"
 ```
 
 ### Interactive singularity command
+If your HPC uses slurm you would first have to request your nodes- below will demonstrate asking for 1 single full node without parallelization as our HPC is set up. 
+```bash
+srun -p 'p_lemenzad' --nodes=1 --time=03:00:00 --ntasks=1 --cpus-per-task=40 --mem=190000 --pty bash -i
+```
+
 I have not tested the interactivity, theoretically it will work in an CLI capacity but any sort of Rstudio will be dependent on your HPC structure. 
 ```bash
 singularity shell --cleanenv docker://alemenze/abrfseurat
 ```
 This has been roughly tested with singularity 3.5.2, but depending upon your install for singularity it may throw a user issue. 
+Once in the interactive shell you can run things as you normally would for CLI access.
 
 ## Updating image
 We can update the image as we wish, but unfortunately dockerhub no longer allows for automated builds without a paying account (as far as I know)- so we will need to manually build and push.
