@@ -101,4 +101,9 @@ library(edgeR)
 library(EnhancedVolcano)
 library(PCAtools)
 library(clusterProfiler)
+
+#Other additions
+library(VAM)
+library(gprofiler2)
+library(glmGamPoi)
 ```

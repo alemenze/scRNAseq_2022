@@ -12,9 +12,9 @@ RUN R -e "remotes::install_github(c('satijalab/seurat-wrappers','kevinblighe/PCA
 RUN R -e "devtools::install_github(c('kevinblighe/EnhancedVolcano','cole-trapnell-lab/monocle3'))"
 
 #Later additions
-RUN R -e "BiocManager::install(c('edgeR','dittoSeq','scDataviz'))"
+RUN R -e "BiocManager::install(c('edgeR','dittoSeq','scDataviz','glmGamPoi'))"
 RUN R -e "devtools::install_github(c('hypercompetent/colorway','powellgenomicslab/DropletQC','samuel-marsh/scCustomize'))"
-RUN R -e "install.packages(c('clustree','SoupX'))"
+RUN R -e "install.packages(c('clustree','SoupX','gprofiler2','VAM'))"
 
 COPY ./Matrix.utils_0.9.8.tar.gz ./Matrix.utils_0.9.8.tar.gz
 RUN R -e "install.packages('./Matrix.utils_0.9.8.tar.gz', repos=NULL, type='source')"
