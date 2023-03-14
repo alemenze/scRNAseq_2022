@@ -28,12 +28,22 @@ docker run \ #starts docker and tells it to run
 
 ## Singularity command
 If you wish to run this on an HPC, you can also use this image there with singularity. Personally I do this in cases of memory issues when I exceed capacity of my local workstation- Ill write it up as a markdown file to be executed through the memory intensive steps (like integration), and save an R image to bring back to local machine. 
+
+### Host your own RStudio container in singularity on an HPC
+The HPC_execution.slurm file introduces how we can now run this as an interactive RStudio environment on your HPC, modified from [Rocker](https://rocker-project.org/use/singularity.html) to fit this project! You may need to modify the slurm file to fit your specific HPC- such as the partition you are requesting a node from, size of the node, time etc. The script will generate a random password and grab an available port from your node, but you can manually alter those if you please. From there you submit your job request.
+```bash
+sbatch HPC_execution.slurm
+```
+Once your job is accepted by slurm it will output 2 files. I probably should rename these... but the .err fill will output the important information for tunnelling. Read that file real quick and it should give you a command like `ssh -N -L 8787:${HOSTNAME}:${PORT} ${SINGULARITYENV_USER}@LOGIN-HOST` with the relevant information inputted. You will need to change @LOGIN-HOST to your respective cluster ssh access- for ours its just amarel.rutgers.edu for example.
+From there on your local machine you should be able to go to [https://localhost:8787](https://localhost:8787), login with the username and password provided in the file, and have fun! This is set up to pull the singularity location from your CWD. 
+
+#### Run just a script
 This will run it in the current working directory off a file called "Processing.Rmd". 
 ```bash
 singularity exec docker://alemenze/abrfseurat Rscript -e "rmarkdown::render('Processing.Rmd')"
 ```
 
-### Interactive singularity command
+#### CLI interactive singularity command
 If your HPC uses slurm you would first have to request your nodes- below will demonstrate asking for 1 single full node without parallelization as our HPC is set up. 
 ```bash
 srun -p 'p_lemenzad' --nodes=1 --time=03:00:00 --ntasks=1 --cpus-per-task=40 --mem=190000 --pty bash -i
